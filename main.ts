@@ -1,14 +1,24 @@
-import { Leafer,Group, Rect, Ellipse } from 'leafer-ui'
+import { App,Group, Rect, Ellipse } from 'leafer-ui'
 import { LeaferXQnConnector,IConnectorOption } from "./src/index";
+import '@leafer-in/editor' // 导入图形编辑器插件 //
 // import { QnConnector } from "leafer-x-connector";
-const leafer = new Leafer({ view: window })
- 
+ const app = new App({
+     view: window,
+	 tree: {
+	 	type: 'viewport'
+	 }, // 添加 tree 层
+	 sky: {},
+     editor: {
+		 lockRatio: true,
+	 }, // 会自动创建 editor实例、tree层、sky层
+ })
 
 const elipse = new Ellipse({ 
     x: 150, 
     y: 150,  
     fill: '#32cd79',  
     draggable: true,
+	editable: true,
 }) 
 const rect = new Rect({ 
     x: 350,
@@ -17,6 +27,7 @@ const rect = new Rect({
     draggable: true,
     stroke: '#ccc',
     strokeWidth: 15,
+	editable: true,
 }) 
 
 const opt:IConnectorOption = {
@@ -35,10 +46,10 @@ const opt:IConnectorOption = {
     // margin:10,
     etc:{
         // text,
-        leafer
+        app
     },
     onDraw:(param)=>{
-        console.log(`param::`,param)
+        // console.log(`param::`,param)
         return param.path
     }
 }
@@ -52,5 +63,5 @@ const group = new Group({
 group.add(rect)
 group.add(elipse)
 // leafer.add(conn)
-leafer.add(group)
+app.tree.add(group)
 group.add(conn)

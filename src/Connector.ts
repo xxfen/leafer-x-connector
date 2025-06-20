@@ -1,4 +1,4 @@
-import { MoveEvent } from '@leafer-ui/core'
+import { BoundsEvent } from '@leafer-ui/core'
 import { Arrow } from '@leafer-in/arrow'
 import { IConnectorOption,IConnectorType, ISideType, IDirection,  ConnectorTarget, IConnectorPoint } from './Interfaces'
 
@@ -28,15 +28,11 @@ export class LeaferXQnConnector extends Arrow  {
     this.direction = this.setDirection(target1,target2)
     
     const that = this
-    target1.on(MoveEvent.DRAG,function (e:PointerEvent) {
-      if (e.type === MoveEvent.DRAG) {
+    target1.on([BoundsEvent.RESIZE,BoundsEvent.LOCAL],function () {
         that._draw()
-      }
     })
-    target2.on(MoveEvent.DRAG,function (e:PointerEvent) {
-      if (e.type === MoveEvent.DRAG) {
+    target2.on([BoundsEvent.RESIZE,BoundsEvent.LOCAL],function () {
         that._draw()
-      }
     })
     this._draw()
     this._draw()    //fix:第一次加载的时候有描边的情况下获取不到外边框问题
