@@ -28,12 +28,14 @@ export class LeaferXQnConnector extends Arrow  {
     this.direction = this.setDirection(target1,target2)
     
     const that = this
-	const events=[BoundsEvent.RESIZE,BoundsEvent.LOCAL]
-    target1.on(events,function () {
-        that._draw()
+    const events=[BoundsEvent.RESIZE,BoundsEvent.LOCAL]
+    target1.on(events,function (e:PointerEvent) {
+        that._draw()      
     })
-    target2.on(events,function () {
+    target2.on(events,function (e:PointerEvent) {
+     
         that._draw()
+      
     })
     this._draw()
     this._draw()    //fix:第一次加载的时候有描边的情况下获取不到外边框问题
